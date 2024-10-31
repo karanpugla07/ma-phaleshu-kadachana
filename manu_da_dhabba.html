@@ -56,7 +56,6 @@
     </table>
 
     <script>
-      
         const breakfast = [
             "Bread Omellete",
             "Aloo Sandwich",
@@ -94,9 +93,11 @@
             dinner: dinner
         };
 
-        function generateRandomDish(dishType) {
-            const options = dishes[dishType];
-            return options[Math.floor(Math.random() * options.length)];
+        function generateRandomDish(dishType, usedDishes) {
+            const options = dishes[dishType].filter(dish => !usedDishes.includes(dish));
+            const randomDish = options[Math.floor(Math.random() * options.length)];
+            usedDishes.push(randomDish);
+            return randomDish;
         }
 
         function generateMenu() {
@@ -105,25 +106,26 @@
             menuBody.innerHTML = "";
 
             days.forEach(day => {
+                const usedDishes = [];
                 const row = document.createElement("tr");
                 const dayCell = document.createElement("td");
                 dayCell.textContent = day;
                 row.appendChild(dayCell);
 
                 const breakfastCell = document.createElement("td");
-                breakfastCell.textContent = generateRandomDish("breakfast");
+                breakfastCell.textContent = generateRandomDish("breakfast", usedDishes);
                 row.appendChild(breakfastCell);
 
                 const lunchCell = document.createElement("td");
-                lunchCell.textContent = generateRandomDish("lunch");
+                lunchCell.textContent = generateRandomDish("lunch", usedDishes);
                 row.appendChild(lunchCell);
 
                 const snacksCell = document.createElement("td");
-                snacksCell.textContent = generateRandomDish("snacks");
+                snacksCell.textContent = generateRandomDish("snacks", usedDishes);
                 row.appendChild(snacksCell);
 
                 const dinnerCell = document.createElement("td");
-                dinnerCell.textContent = generateRandomDish("dinner");
+                dinnerCell.textContent = generateRandomDish("dinner", usedDishes);
                 row.appendChild(dinnerCell);
 
                 menuBody.appendChild(row);
