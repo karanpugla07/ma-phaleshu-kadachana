@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Menu Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+            background-color: #ffffff;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weekly Menu Generator</h1>
+    <button onclick="generateMenu()">Generate Weekly Menu</button>
+    <table id="menuTable">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Evening Snacks</th>
+                <th>Dinner</th>
+            </tr>
+        </thead>
+        <tbody id="menuBody">
+            <!-- Weekly menu will be populated here -->
+        </tbody>
+    </table>
+
+    <script>
+      
+        const breakfast = [
+            "Bread Omellete",
+            "Aloo Sandwich",
+            "Paneer Sandwich",
+            "Club Veg Sandwich",
+            "Poha",
+            "Paneer Dosa",
+            "Aloo Dosa"
+        ]
+        
+        const lunch = [
+            "Mattar Paneer",
+            "Palak Paneer",
+            "Aloo Gobi",
+            "Bharta",
+            "Dal Chawal",
+            "Rajma Chawal",
+            "Gheeya Chana Dal"
+        ]
+        
+        const snacks = [
+            "Meetha Poora",
+            "Poha",
+            "Omellete",
+            "Chai Toast",
+            "Dosa"
+        ]
+        
+        const dinner = lunch
+        
+        const dishes = {
+            breakfast: breakfast,
+            lunch: lunch,
+            snacks: snacks,
+            dinner: dinner
+        };
+
+        function generateRandomDish(dishType) {
+            const options = dishes[dishType];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+
+        function generateMenu() {
+            const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            const menuBody = document.getElementById("menuBody");
+            menuBody.innerHTML = "";
+
+            days.forEach(day => {
+                const row = document.createElement("tr");
+                const dayCell = document.createElement("td");
+                dayCell.textContent = day;
+                row.appendChild(dayCell);
+
+                const breakfastCell = document.createElement("td");
+                breakfastCell.textContent = generateRandomDish("breakfast");
+                row.appendChild(breakfastCell);
+
+                const lunchCell = document.createElement("td");
+                lunchCell.textContent = generateRandomDish("lunch");
+                row.appendChild(lunchCell);
+
+                const snacksCell = document.createElement("td");
+                snacksCell.textContent = generateRandomDish("snacks");
+                row.appendChild(snacksCell);
+
+                const dinnerCell = document.createElement("td");
+                dinnerCell.textContent = generateRandomDish("dinner");
+                row.appendChild(dinnerCell);
+
+                menuBody.appendChild(row);
+            });
+        }
+
+        // Generate the initial menu on page load
+        window.onload = generateMenu;
+    </script>
+</body>
+</html>
